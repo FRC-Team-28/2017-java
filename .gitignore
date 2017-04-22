@@ -1,0 +1,9 @@
+# IntelliJ IDEA
+.idea
+*.iml
+
+# vim
+*.swp
+
+# compiled code
+*.javac

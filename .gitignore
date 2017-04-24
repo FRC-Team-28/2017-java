@@ -8,3 +8,7 @@
 # compiled code
 *.javac
 /bin/
+
+# eclipse
+.classpath
+.project

@@ -1,5 +1,21 @@
 package org.usfirst.frc.team28.robot;
 
-public class Rotaion {
+import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 
+public class Rotaion{
+	AnalogGyro gyro;
+	double header;
+	PID pid;
+	public Rotaion(int channel){
+		gyro = new AnalogGyro(channel);
+		header = gyro.getAngle();
+		pid = new PID(1, 0, 0, 0);
+	}
+	public void reset(){
+		header = gyro.getAngle();
+	}
+	public double update(){
+		return pid.update((header - gyro.getAngle()) % 180);
+	}
 }

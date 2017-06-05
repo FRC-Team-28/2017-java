@@ -12,3 +12,6 @@
 # eclipse
 .classpath
 .project
+/target/
+.settings
+.metadata

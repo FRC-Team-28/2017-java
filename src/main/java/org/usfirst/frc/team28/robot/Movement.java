@@ -8,7 +8,7 @@ public class Movement {
 	
 	public void update(){
 		rotaion.update();
-		robotDrive.mecanumDrive_Cartesian(x, y, rotation, gyroAngle);
+		robotDrive.mecanumDrive_Cartesian(x, y, rotaion, gyroAngle);
 	}
 	public void checkInput(){
 		

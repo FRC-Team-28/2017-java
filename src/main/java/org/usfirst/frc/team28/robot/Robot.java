@@ -1,7 +1,6 @@
 package org.usfirst.frc.team28.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -13,11 +12,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	Hang hangmotor;
-	final String defaultAuto = "Default";
-	final String customAuto = "My Auto";
-	String autoSelected;
-	SendableChooser<String> chooser = new SendableChooser<>();
+	private final String defaultAuto = "Default";
+	private final String customAuto = "My Auto";
+	private String autoSelected;
+	private SendableChooser<String> chooser = new SendableChooser<>();
+	private Movement movement = new Movement();
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -28,7 +27,6 @@ public class Robot extends IterativeRobot {
 		chooser.addDefault("Default Auto", defaultAuto);
 		chooser.addObject("My Auto", customAuto);
 		SmartDashboard.putData("Auto choices", chooser);
-		hangmotor = new Hang(new Spark(6));
 	}
 
 	/**
@@ -36,7 +34,7 @@ public class Robot extends IterativeRobot {
 	 * between different autonomous modes using the dashboard. The sendable
 	 * chooser code works with the Java SmartDashboard. If you prefer the
 	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 *` getString line to get the auto name from the text box below the Gyro
+	 * getString line to get the auto name from the text box below the Gyro
 	 *
 	 * You can add additional auto modes by adding additional comparisons to the
 	 * switch structure below with additional strings. If using the

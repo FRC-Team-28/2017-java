@@ -12,7 +12,3 @@
 # eclipse
 .classpath
 .project
-/target/
-.settings
-.metadata
-wang.txt

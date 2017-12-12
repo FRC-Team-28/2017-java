@@ -16,8 +16,12 @@ public class Rotaion{
 	public void reset(){
 		header = gyro.getAngle();
 	}
-	public double update(){
-		return pid.update((header - gyro.getAngle()) % 180);  
+	public double update(double turnRight){
+		if (turnRight == 0) {
+			return pid.update((header - gyro.getAngle()) % 180);
+		} else {
+			return turnRight;
+		}
 	}
 	public static double DiffAngle(int current, int target){
 		return Math.floorMod(target - current + 180, 360)-180;

@@ -15,12 +15,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	Hang hangmotor;
+	Hang hangmotor ;
 	final String defaultAuto = "Default";
 	final String customAuto = "My Auto";
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
-
+	Movement movement;
+	Controller controller;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -31,6 +32,7 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("My Auto", customAuto);
 		SmartDashboard.putData("Auto choices", chooser);
 		hangmotor = new Hang(new Spark(6));
+		movement = new Movement(controller);
 	}
 
 	/**
@@ -73,6 +75,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		controller.update();
+		movement.update();
 	}
 
 	/**

@@ -3,6 +3,7 @@ package org.usfirst.frc.team28.robot;
 import org.usfirst.frc.team28.robot.*;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,13 +16,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	Hang hangmotor ;
+	
 	final String defaultAuto = "Default";
 	final String customAuto = "My Auto";
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
 	Movement movement;
 	Controller controller;
+	Preferences prefs;
+	
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -31,10 +35,15 @@ public class Robot extends IterativeRobot {
 		chooser.addDefault("Default Auto", defaultAuto);
 		chooser.addObject("My Auto", customAuto);
 		SmartDashboard.putData("Auto choices", chooser);
-		hangmotor = new Hang(new Spark(6));
+		
 		controller = new Controller();
 		movement = new Movement(controller);
 		
+		prefs = Preferences.getInstance();
+		prefs.putDouble("Proportion", 0.0);
+		prefs.putDouble("Integral", 0.0);
+		prefs.putDouble("Derivative", 0.0);
+
 
 	}
 

@@ -1,54 +1,47 @@
 package org.usfirst.frc.team28.robot;
 
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Spark;
+import com.ctre.CANTalon;
+import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Movement {
 	private Rotaion rotaion = new Rotaion(PinConstants.GYRO_PIN);
-    private Spark bR, bL, fR, fL;
 	private Controller controller;
 	private double spin, gyroAngle;
-	
+	private Spark bR = new Spark(PinConstants.BR_MOTOR);
+	private Spark bL = new Spark(PinConstants.BL_MOTOR);
+	private CANTalon fL = new CANTalon(PinConstants.FL_MOTOR);
+	private CANTalon fR = new CANTalon(PinConstants.FR_MOTOR);
+		
+	private Spark test = new Spark(5);
 	public Movement(Controller newController){
 		controller = newController;
-		Spark bR = new Spark(PinConstants.BR_MOTOR);
-		Spark bL = new Spark(PinConstants.BL_MOTOR);
-		Spark fL = new Spark(PinConstants.FL_MOTOR);
-		Spark fR = new Spark(PinConstants.FR_MOTOR);
+		
 	}
 	
  	public void update(){
-		if(controller.getAxis("forward") != 0)
-		{
-			fR.set(-1.0 * (controller.getAxis("forward")));
-			fL.set(1.0 * (controller.getAxis("forward")));
-			bR.set(-1.0 * (controller.getAxis("forward")));
-			bL.set(1.0 * (controller.getAxis("forward")));
-		}
+ 		double turnRight = rotaion.update(controller.getAxis("turnRight"));
  		
-		if(controller.getAxis("right") != 0)
-		{
-			fR.set(1.0 * (controller.getAxis("right")));
-			fL.set(1.0 * (controller.getAxis("right")));
-			bR.set(-1.0 * (controller.getAxis("right")));
-			bL.set(-1.0 * (controller.getAxis("right")));
-		}
+		fR.set(-1 * (controller.getAxis("forward")) + controller.getAxis("right") + turnRight);
+		fL.set(controller.getAxis("forward") + controller.getAxis("right") + turnRight);
+		bR.set(-1 * (controller.getAxis("forward")) -1 * (controller.getAxis("right")) + turnRight);
+		bL.set(controller.getAxis("forward") -1 * (controller.getAxis("right")) + turnRight);
 		
-		if(controller.getAxis("forward") != 0)
-		{
-			fR.set(1.0 * (controller.getAxis("turnRight")));
-			fL.set(1.0 * (controller.getAxis("turnRight")));
-			bR.set(1.0 * (controller.getAxis("turnRight")));
-			bL.set(1.0 * (controller.getAxis("turnRight")));
+		//test.set(0.5);
+		//rotaion.reset();
+		
+		SmartDashboard.putNumber("front right speed", fR.getEncVelocity());
+		SmartDashboard.putNumber("front left speed", fL.getEncVelocity());
+		
+		/*
+		if ((-1 * (controller.getAxis("forward")) + controller.getAxis("right") + rotaion.update(controller.getAxis("turnRight"))) == 0){
+			//System.out.println("nothing wrong");
 		}
 		else
-		{
-			fR.set(0);
-			fL.set(0);
-			bR.set(0);
-			bL.set(0);
-		}
-		
+			System.out.println("everything is wrong");
+		*/
+			
 	}
 	
 	

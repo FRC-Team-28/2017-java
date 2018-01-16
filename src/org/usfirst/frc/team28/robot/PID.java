@@ -1,5 +1,6 @@
 package org.usfirst.frc.team28.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PID {
 	double kP;
@@ -16,17 +17,30 @@ public class PID {
 		this.kI = kI;
 		this.kD = kD;
 		this.setpoint = setpoint;
+		
+		SmartDashboard.putNumber("kP", kP);
+		SmartDashboard.putNumber("kI", kI);
+		SmartDashboard.putNumber("kD", kD);
 	}
+	
 	public double getSetpoint() {
 		return setpoint;
 	}
+	
 	public void setSetpoint(double setpoint) {
 		this.setpoint = setpoint;
 	}
+	
 	public double update(double processVariable) {
+		
 		prevError = error;
 		error = setpoint - processVariable;
 		integral = integral + error;
+		
+		kP = SmartDashboard.getNumber("kP", kP);
+		kI = SmartDashboard.getNumber("kI", kI);
+		kD = SmartDashboard.getNumber("kD", kD);
+
 		return kP * error + kI * integral + kD * (error - prevError);
 	}
 }
